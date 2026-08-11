@@ -1,0 +1,29 @@
+{
+  "id": "aws_sns",
+  "name": "AWS SNS",
+  "name_en": "AWS SNS",
+  "version": "1.0.0",
+  "description": "Publicación de notificaciones y mensajes con Amazon Simple Notification Service: publicar en topic, listar topics y enviar SMS",
+  "description_en": "Notification and message publishing with Amazon Simple Notification Service: publish to topic, list topics, and send SMS",
+  "category": "Cloud AWS",
+  "category_en": "AWS Cloud",
+  "keywords": ["aws", "sns", "notifications", "notificaciones", "topic", "sms", "mensajes"],
+  "icon": "icon.svg",
+  "library": {"package": "ruvic-aws-sns-connector", "install": "pip install git+https://github.com/montealegre777/conector-aws-sns.git#subdirectory=lib", "import_name": "ruvic_aws_sns_connector"},
+  "auth_modes": [{"id": "access_keys", "label": "AWS Access Keys", "fields": [
+    {"key": "aws_access_key_id", "label": "AWS Access Key ID", "type": "text", "required": true},
+    {"key": "aws_secret_access_key", "label": "AWS Secret Access Key", "type": "password", "secret": true, "required": true},
+    {"key": "aws_session_token", "label": "AWS Session Token", "type": "password", "secret": true, "required": false},
+    {"key": "region", "label": "Región AWS", "type": "text", "required": true, "placeholder": "us-east-1"},
+    {"key": "default_topic_arn", "label": "Topic ARN por defecto", "type": "text", "required": false},
+    {"key": "allow_sms", "label": "Permitir envío de SMS", "type": "boolean", "required": false, "default": "false", "help_text": "Bloqueado por defecto porque puede generar costo real."},
+    {"key": "sms_sender_id", "label": "SMS Sender ID", "type": "text", "required": false},
+    {"key": "sms_type", "label": "Tipo de SMS", "type": "select", "required": false, "default": "Transactional", "options": [{"value": "Transactional", "label": "Transactional"}, {"value": "Promotional", "label": "Promotional"}]},
+    {"key": "timeout", "label": "Timeout (segundos)", "type": "number", "required": false, "default": "20"},
+    {"key": "max_message_length", "label": "Tamaño máximo del mensaje (bytes)", "type": "number", "required": false, "default": "8192"}
+  ]}],
+  "env_prefix": "RUVIC_AWS_SNS_",
+  "operations": ["messaging.publish_to_topic", "messaging.list_topics", "messaging.send_sms"],
+  "test_connection": true,
+  "docs": {"skill": "SKILL.md", "permissions_note": "El usuario/rol IAM requiere permisos mínimos sns:ListTopics y sns:Publish. Para SMS se requiere autorización explícita en el conector y cumplimiento de límites/regulaciones de SMS por país."}
+}
